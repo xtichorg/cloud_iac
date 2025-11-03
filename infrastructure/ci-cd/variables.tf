@@ -11,7 +11,7 @@ variable "cidi_bucket_name" {
 }
 
 variable "cicd_bucket_region" {
-    description = "The AWS region where the CI/CD S3 bucket is located."
-    type        = string
-    default     = "us-east-1"
+  description = "The AWS region where the CI/CD S3 bucket is located."
+  type        = string
+  default     = "us-east-1"
 }

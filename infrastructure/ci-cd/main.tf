@@ -13,10 +13,10 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "cicd" {
-    bucket = var.cidi_bucket_name
-    tags = {
-        Name = "cicd" # Tag the S3 bucket for easier identification
-    }
+  bucket = var.cidi_bucket_name
+  tags = {
+    Name = "cicd" # Tag the S3 bucket for easier identification
+  }
 }
 
 resource "aws_iam_openid_connect_provider" "github" {
@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values = var.gha_oidc_assume_role_sub_values
+      values   = var.gha_oidc_assume_role_sub_values
     }
   }
 }
@@ -70,8 +70,6 @@ data "aws_iam_policy_document" "s3_put" {
       "arn:aws:s3:::${var.cidi_bucket_name}/*"
     ]
   }
-
-
 }
 
 resource "aws_iam_policy" "s3_put" {
