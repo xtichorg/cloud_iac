@@ -35,4 +35,25 @@ jobs:
       - name: Terraform Init
         run: |
           cd ./environments/aws_dev/network
-          terraform init
+          terraform init -upgrade
+
+      - name: Terraform Validate
+        run: |
+          cd ./environments/aws_dev/network
+          terraform validate
+
+      - name: Terraform Plan
+        run: |
+          cd ./environments/aws_dev/network
+          terraform plan -out=tfplan
+
+      - name: Upload Terraform Plan artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-network
+          path: ./environments/aws_dev/network/tfplan
+
+      - name: Terraform Apply
+        run: |
+          cd ./environments/aws_dev/network
+          terraform apply -auto-approve tfplan

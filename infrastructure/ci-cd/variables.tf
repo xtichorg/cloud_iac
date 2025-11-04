@@ -3,12 +3,12 @@ variable "gha_oidc_assume_role_sub_values" {
   type        = list(string)
 }
 
-variable "cidi_bucket_name" {
+variable "backend_bucket_name" {
   description = "The name of the S3 bucket for CI/CD Terraform state."
   type        = string
 }
 
-variable "cicd_bucket_region" {
+variable "region" {
   description = "The AWS region where the CI/CD S3 bucket is located."
   type        = string
 }
