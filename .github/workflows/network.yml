@@ -22,4 +22,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v3.1.2
