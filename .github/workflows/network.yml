@@ -21,3 +21,5 @@ jobs:
           role-session-name: gha-${{ github.run_id }}
       - name: Checkout repository
         uses: actions/checkout@v5
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
