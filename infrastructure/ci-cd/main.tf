@@ -9,15 +9,15 @@ terraform {
 }
 
 provider "aws" {
-  region = var.cicd_bucket_region
+  region = var.region
 }
 
-resource "aws_s3_bucket" "cicd" {
-  bucket = var.cidi_bucket_name
-  tags = {
-    Name = "cicd" # Tag the S3 bucket for easier identification
-  }
-}
+# resource "aws_s3_bucket" "backend_bucket" {
+#   bucket = var.backend_bucket_name
+#   tags = {
+#     Name = "backend_bucket" # Tag the S3 bucket for easier identification
+#   }
+# }
 
 resource "aws_iam_openid_connect_provider" "github" {
   client_id_list = ["sts.amazonaws.com"]
@@ -57,24 +57,26 @@ resource "aws_iam_role" "github_oidc_role" {
   }
 }
 
-data "aws_iam_policy_document" "s3_put" {
+data "aws_iam_policy_document" "s3_backend" {
   statement {
     effect = "Allow"
     actions = [
+      "s3:GetObject",
       "s3:PutObject",
+      "s3:DeleteObject",
       "s3:AbortMultipartUpload",
       "s3:ListBucket"
     ]
     resources = [
-      "arn:aws:s3:::${var.cidi_bucket_name}",
-      "arn:aws:s3:::${var.cidi_bucket_name}/*"
+      "arn:aws:s3:::${var.backend_bucket_name}",
+      "arn:aws:s3:::${var.backend_bucket_name}/*"
     ]
   }
 }
 
 resource "aws_iam_policy" "s3_put" {
   name   = "gha-s3-put"
-  policy = data.aws_iam_policy_document.s3_put.json
+  policy = data.aws_iam_policy_document.s3_backend.json
 }
 
 resource "aws_iam_role_policy_attachment" "attach" {
